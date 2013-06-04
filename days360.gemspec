@@ -9,6 +9,7 @@ Gem::Specification.new do |spec|
   spec.authors       = ["Michael Prilop"]
   spec.email         = ["Michael.Prilop@gmail.com"]
   spec.description   = %q{Calculates the difference between two dates based on the 360 day year used in interest calculations}
+  spec.summary       = %q{Calculates the difference between two dates based on the 360 day year used in interest calculations. Several methods for calculation are available.}
   spec.homepage      = ""
   spec.license       = "MIT"
 
