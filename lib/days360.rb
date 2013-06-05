@@ -3,8 +3,16 @@ require 'date'
 
 module Days360
 
-  class Days360
+    def Days360.included cls
+      cls.extend Days360
+    end
 
+
+    def days360(date_a, date_b, method = :US)
+      return days360_US(date_a, date_b) if method.eql?(:US)
+      return days360_US_NASD(date_a, date_b) if method.eql?(:US_NASD)
+      return days360_EU(date_a, date_b) if method.eql?(:EU)
+    end
 
     ##
     # This method uses the the US/NASD Method (30US/360) to calculate the days between two dates
@@ -18,7 +26,7 @@ module Days360
     #
     # Implementation as given by http://en.wikipedia.org/w/index.php?title=360-day_calendar&oldid=546566236
     #
-    def self.us_method(date_a, date_b, preserve_excel_compatibility = true)
+    def days360_US(date_a, date_b, preserve_excel_compatibility = true)
       day_a = date_a.day
       day_b = date_b.day
 
@@ -37,8 +45,8 @@ module Days360
 
     end
 
-    def self.nasd_us_method(date_a, date_b)
-      us_method(date_a, date_b, false)
+    def days360_US_NASD(date_a, date_b)
+      days360_US(date_a, date_b, false)
     end
 
     ##
@@ -46,7 +54,7 @@ module Days360
     #
     # Implementation as given by http://en.wikipedia.org/w/index.php?title=360-day_calendar&oldid=546566236
     #
-    def self.eu_method(date_a, date_b)
+    def days360_EU(date_a, date_b)
       day_a = date_a.day
       day_b = date_b.day
 
@@ -65,10 +73,9 @@ module Days360
 
     private
 
-    def self.last_day_of_february?(date)
+    def last_day_of_february?(date)
       last_february_day_in_given_year = Date.new(date.year, 2, -1)
       date.eql?(last_february_day_in_given_year)
     end
 
-  end
 end

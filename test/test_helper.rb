@@ -25,7 +25,7 @@ def compare_gem_to_reference(calculation_method, reference_results)
     next if top_index == 0
     left_dates.each_with_index do |left_date, left_index|
       next if left_index == 0
-      gem_result = Days360::Days360.send(calculation_method,left_date, top_date)
+      gem_result = days360(left_date, top_date, calculation_method)
       reference_result = reference_results[left_index][top_index].to_i
       equal = reference_result.eql?(gem_result)
 
