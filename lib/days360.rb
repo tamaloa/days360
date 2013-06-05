@@ -32,12 +32,7 @@ module Days360
       # (3) If date A falls on the 30th of a month after applying (2) above and date B falls on the 31st of a month, then date B will be changed to the 30th.
       day_b = 30 if day_a.eql?(30) and day_b.eql?(31)
 
-
-      months_inbetween = months(date_a, date_b) - 1
-      days_from_date_a = 30 - day_a
-      days_from_date_b = day_b
-      days = days_from_date_a + days_from_date_b + months_inbetween * 30
-
+      days = (date_b.year - date_a.year)*360 + (date_b.month - date_a.month)*30 + (day_b - day_a)
       return days
 
     end
@@ -47,10 +42,6 @@ module Days360
     end
 
     private
-
-    def self.months(date_a, date_b)
-      (date_b.year * 12 + date_b.month) - (date_a.year * 12 + date_a.month)
-    end
 
     def self.last_day_of_february?(date)
       last_february_day_in_given_year = Date.new(date.year, 2, -1)
