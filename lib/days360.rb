@@ -41,6 +41,28 @@ module Days360
       us_method(date_a, date_b, false)
     end
 
+    ##
+    # This method uses the the European method (30E/360) to calculate the days between two dates
+    #
+    # Implementation as given by http://en.wikipedia.org/w/index.php?title=360-day_calendar&oldid=546566236
+    #
+    def self.eu_method(date_a, date_b)
+      day_a = date_a.day
+      day_b = date_b.day
+
+
+      #If either date A or B falls on the 31st of the month, that date will be changed to the 30th;
+      day_a = 30 if day_a.eql?(31)
+      day_b = 30 if day_b.eql?(31)
+
+      #Where date B falls on the last day of February, the actual date B will be used.
+      #???
+
+      days = (date_b.year - date_a.year)*360 + (date_b.month - date_a.month)*30 + (day_b - day_a)
+      return days
+
+    end
+
     private
 
     def self.last_day_of_february?(date)
