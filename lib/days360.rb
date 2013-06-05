@@ -56,7 +56,7 @@ module Days360
       day_b = 30 if day_b.eql?(31)
 
       #Where date B falls on the last day of February, the actual date B will be used.
-      #???
+      #This rule is actually only a note and does not change the calculation.
 
       days = (date_b.year - date_a.year)*360 + (date_b.month - date_a.month)*30 + (day_b - day_a)
       return days
