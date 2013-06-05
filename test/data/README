@@ -1,0 +1,12 @@
+This directory contains test data to verify compliance against common office suits.
+
+Bot MsOffice and OpenOffice / LibreOffice have a days360 method. In both cases the method takes an optional third
+parameter and thus uses either the US method or the EU method.
+
+calc_DAYS360*.csv sheets were generated using LibreOffice Calc 3.5.7.2 
+excel_DAYS360*.csv sheets were generated using Microsoft Office Excel 2010 (version 14.0)
+
+The test data is an 36x36 test vector of dates which is taken from
+https://issues.apache.org/ooo/show_bug.cgi?id=84934 (credits to terrye) but was freshly generate with more up to date
+office suites (and thus do not contain the bug mentioned in before issue).
+ 
