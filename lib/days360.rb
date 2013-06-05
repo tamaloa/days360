@@ -24,10 +24,10 @@ module Days360
 
       # Step 1 must be skipped to preserve Excel compatibility
       # (1) If both date A and B fall on the last day of February, then date B will be changed to the 30th.
-      day_b = 30 if last_day_of_february(date_a) and last_day_of_february(date_b) and not preserve_excel_compatibility
+      day_b = 30 if last_day_of_february?(date_a) and last_day_of_february?(date_b) and not preserve_excel_compatibility
 
       # (2) If date A falls on the 31st of a month or last day of February, then date A will be changed to the 30th.
-      day_a = 30 if day_a.eql?(31) or last_day_of_february(date_a)
+      day_a = 30 if day_a.eql?(31) or last_day_of_february?(date_a)
 
       # (3) If date A falls on the 30th of a month after applying (2) above and date B falls on the 31st of a month, then date B will be changed to the 30th.
       day_b = 30 if day_a.eql?(30) and day_b.eql?(31)
@@ -52,8 +52,8 @@ module Days360
       (date_b.year * 12 + date_b.month) - (date_a.year * 12 + date_a.month)
     end
 
-    def self.last_day_of_february(date)
-      last_february_day_in_given_year = Date.new(date.year, date.month, -1)
+    def self.last_day_of_february?(date)
+      last_february_day_in_given_year = Date.new(date.year, 2, -1)
       date.eql?(last_february_day_in_given_year)
     end
 
