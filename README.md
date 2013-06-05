@@ -2,6 +2,8 @@
 
 Calculates the difference between two dates based on the 360 day year used in interest calculations
 
+[![Build Status](https://travis-ci.org/tamaloa/days360.png?branch=master)](https://travis-ci.org/tamaloa/days360)
+
 ## Installation
 
 Add this line to your application's Gemfile:
