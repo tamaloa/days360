@@ -8,8 +8,8 @@ Gem::Specification.new do |spec|
   spec.version       = Days360::VERSION
   spec.authors       = ["Michael Prilop"]
   spec.email         = ["Michael.Prilop@gmail.com"]
-  spec.description   = %q{Calculates the difference between two dates based on the 360 day year used in interest calculations}
-  spec.summary       = %q{Calculates the difference between two dates based on the 360 day year used in interest calculations. Several methods for calculation are available.}
+  spec.summary       = %q{number of days between two dates based on the 360 day year}
+  spec.description   = %q{Calculates the difference in days between two dates. The calculation is based on the 360 day year used in interest calculations. Different methods are provided. The default method aims to be fully compatible to Excel/Calc based calculations.}
   spec.homepage      = "https://github.com/tamaloa/days360"
   spec.license       = "MIT"
 

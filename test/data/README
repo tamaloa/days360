@@ -5,6 +5,7 @@ parameter and thus uses either the US method or the EU method.
 
 calc_DAYS360*.csv sheets were generated using LibreOffice Calc 3.5.7.2 
 excel_DAYS360*.csv sheets were generated using Microsoft Office Excel 2010 (version 14.0)
+NASD_reference_DAYS360_US.csv was generated using an macro provided in the spreadsheet linked in below Open Office issue (and cross validated for single values from other sources)
 
 The test data is an 36x36 test vector of dates which is taken from
 https://issues.apache.org/ooo/show_bug.cgi?id=84934 (credits to terrye) but was freshly generate with more up to date
