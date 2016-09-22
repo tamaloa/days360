@@ -57,8 +57,8 @@ function days360_US_NASD(date_a, date_b) {
 
 
 function days360_EU(date_a, date_b) {
-  let day_a = date_a.getDay(),
-      day_b = date_a.getDay();
+  let day_a = date_a.getDate(),
+      day_b = date_b.getDate();
 
   //If either date A or B falls on the 31st of the month, that date will be changed to the 30th;
   if(day_a === 31) day_a = 30;
