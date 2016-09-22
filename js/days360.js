@@ -22,8 +22,8 @@ class Days360 {
 }
 
 function days360_US(date_a, date_b, preserve_excel_compatibility = true) {
-  let day_a = date_a.getDay(),
-      day_b = date_a.getDay();
+  let day_a = date_a.getDate(),
+      day_b = date_b.getDate();
 
   // Step 1 must be skipped to preserve Excel compatibility
   // (1) If both date A and B fall on the last day of February, then date B will be changed to the 30th.
