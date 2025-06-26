@@ -1,0 +1,68 @@
+name: Ruby CI
+
+on: [push, pull_request]
+
+jobs:
+  test_legacy_ruby:
+    runs-on: ubuntu-latest 
+    name: Ruby 1.9.3 test
+    steps:
+    - uses: actions/checkout@v3
+    - name: Set up rbenv and compile Ruby 1.9.3
+      run: |
+        sudo apt-get update -qq
+        sudo apt-get install -y autoconf bison build-essential libssl-dev libyaml-dev libreadline6-dev zlib1g-dev libncurses5-dev libffi-dev libgdbm-dev
+        git clone https://github.com/rbenv/rbenv.git ~/.rbenv
+        echo 'export PATH="$HOME/.rbenv/bin:$PATH"' >> $GITHUB_ENV
+        echo 'eval "$(rbenv init -)"' >> $GITHUB_ENV
+        # Reload shell to ensure rbenv is available for next steps, GITHUB_ENV is for subsequent steps in the job
+        # For current step, we might need to source it or ensure rbenv path is directly usable
+        export PATH="$HOME/.rbenv/bin:$PATH"
+        eval "$(rbenv init -)"
+        
+        git clone https://github.com/rbenv/ruby-build.git "$(rbenv root)"/plugins/ruby-build
+        echo 'export PATH="$(rbenv root)/plugins/ruby-build/bin:$PATH"' >> $GITHUB_ENV
+        export PATH="$(rbenv root)/plugins/ruby-build/bin:$PATH"
+
+        # Specify a patch version for 1.9.3, e.g., 1.9.3-p551
+        # Check available versions with: rbenv install --list
+        # Note: Compiling old Ruby versions can be tricky due to dependencies or OpenSSL issues.
+        # May need CFLAGS or specific configure options if it fails.
+        # Example: export CFLAGS="-O2 -fno-tree-dce -fno-optimize-sibling-calls"
+        # Example for OpenSSL issues with older Rubies:
+        # export RUBY_CONFIGURE_OPTS="--with-openssl-dir=$(brew --prefix openssl@1.1)" # macOS example
+        # On Ubuntu, it might be --with-openssl-dir=/usr/include/openssl or similar, or using an older OpenSSL version.
+        # For now, let's try a direct install.
+        rbenv install 1.9.3-p551
+        rbenv global 1.9.3-p551
+        ruby -v
+    - name: Install Bundler and dependencies
+      run: |
+        export PATH="$HOME/.rbenv/bin:$PATH"
+        eval "$(rbenv init -)"
+        # Older rubies might need specific bundler versions
+        gem install bundler -v "~> 1.17" # Example: try a Bundler version compatible with Ruby 1.9.3
+        bundle install --jobs 4 --retry 3
+    - name: Run tests
+      run: |
+        export PATH="$HOME/.rbenv/bin:$PATH"
+        eval "$(rbenv init -)"
+        bundle exec rake
+
+  test_modern_ruby:
+    runs-on: ubuntu-latest
+    # Optional: run modern tests after legacy tests pass, or in parallel by removing 'needs'
+    # needs: test_legacy_ruby 
+    strategy:
+      matrix:
+        ruby-version: ["2.4", "2.5", "2.6", "jruby-18mode", "jruby-19mode"]
+    name: Ruby ${{ matrix.ruby-version }} test
+    steps:
+    - uses: actions/checkout@v3
+    - name: Set up Ruby
+      uses: ruby/setup-ruby@v1
+      with:
+        ruby-version: ${{ matrix.ruby-version }}
+        bundler-cache: true # runs 'bundle install' and caches installed gems
+    - name: Run tests
+      run: bundle exec rake
